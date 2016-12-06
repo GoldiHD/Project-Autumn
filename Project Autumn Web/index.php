@@ -36,10 +36,12 @@ if (session_status() == PHP_SESSION_NONE) {
 					</div>
 					<div class="col-md-12 center">
                         <br>
-						<input style="width: 17vh;" class="btn btn-success" type="submit" name="submit" id="submit" value="Login">
+						<input style="width: 17vh;" class="btn btn-primary" type="submit" name="submit" id="submit" value="Login">
 					</div>
 				</div>
 			</form>
+
+            <a style="margin-top: 1vh" class="btn btn-success" href="register.php"> Register</a>
 		</div>
 	</section>
 </center>

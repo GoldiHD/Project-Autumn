@@ -20,10 +20,12 @@ if (isset($_POST['submit']))
         $_SESSION['loggedin'] = true;
         $_SESSION['Id'] = $row['Id'];
         $_SESSION['userLoggedin'] = $row['username'];
+        $_SESSION['userEmail'] = $row['email'];
+        $_SESSION['userPrivilege'] = $row['privileges'];
             die(header("Location: ../chat.php"));
     }
     else
     {
-        die("<script type='text/javascript'>alert('Firmanavn / E-mail eller Password er forkert.'); window.location = \"../index.php\";</script>");
+        die("<script type='text/javascript'>alert('Brugernavn / E-mail eller Password er forkert.'); window.location = \"../index.php\";</script>");
     }
 }
