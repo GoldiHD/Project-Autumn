@@ -1,11 +1,11 @@
 <?php
 if (isset($_POST['submit']))
 {
-    $username = $_POST['user_name'];
-    $email = $_POST['user_email'];
-    $emailRe = $_POST['user_email_re'];
-    $password = $_POST['user_pass'];
-    $passwordRe = $_POST['user_pass_re'];
+    $username = strip_tags($_POST['user_name']);
+    $email = strip_tags($_POST['user_email']);
+    $emailRe = strip_tags($_POST['user_email_re']);
+    $password = strip_tags($_POST['user_pass']);
+    $passwordRe = strip_tags($_POST['user_pass_re']);
     if(strlen($username) <= 6)
     {
         die("<script type='text/javascript'>alert('Det indtastede brugernavn er under 7 tegn'); window.location = \"../register.php\";</script>");
@@ -21,8 +21,12 @@ if (isset($_POST['submit']))
     include 'config.php';
     $username = mysqli_real_escape_string($db,$username);
     $email = mysqli_real_escape_string($db,$email);
-    $mySqlQuery = "SELECT * FROM `users` WHERE `username` = '$username' OR `email` = '$email'";
-    $result = mysqli_query($db,$mySqlQuery);
+    $mySqlQuery = "SELECT * FROM `users` WHERE `username` = ? OR `email` = ?";
+    $stmt = $db->prepare($mySqlQuery);
+    $stmt -> bind_param("ss", $username,$email);
+    $stmt ->execute();
+    $result = $stmt->get_result();
+    $stmt ->close();
     $row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
     if($row['user_name'] == $username || $row['user_email'] == $email)
     {
@@ -30,7 +34,13 @@ if (isset($_POST['submit']))
     }
    $passwordHashed =  password_hash($password, PASSWORD_DEFAULT);
    $passwordHashed = mysqli_real_escape_string($db,$passwordHashed);
-    $mySqlQuery = "INSERT INTO `users` (username,email,password)VALUES ('$username','$email','$passwordHashed')";
-    mysqli_query($db,$mySqlQuery);
+    $mySqlQuery = "INSERT INTO `users` (username,email,password)VALUES (?,?,?)";
+    $stmt = $db->prepare($mySqlQuery);
+    $username = preg_replace("/[^A-Za-z0-9?![:space:]]/","",$username);
+    $email = preg_replace("/[^A-Za-z0-9?![:space:]]/","",$email);
+    $stmt -> bind_param("sss", $username,$email,$passwordHashed);
+    $stmt ->execute();
+    $result = $stmt->get_result();
+    $stmt ->close();
     die("<script type='text/javascript'>alert('Kontoen blev oprettet.'); window.location = \"../index.php\";</script>");
 }

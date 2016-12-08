@@ -12,6 +12,7 @@
 
 </head>
 <body>
+<center>
 	<section>
 		<div>
 			<h1>Register account on chatter</h1>
@@ -49,5 +50,6 @@
 			</form>
 		</div>
 	</section>
+</center>
 </body>
 </html>

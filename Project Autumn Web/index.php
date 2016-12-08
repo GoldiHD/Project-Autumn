@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
 <center style="margin-top: 30vh">
 	<section>
 		<div>
-			<h1>Login to chat.</h1>
+			<h1 style="color: #3c763d">Login to chat.</h1>
 			<form action="backend/loginuser.php" method="post">
 				<div class="">
 					<div class="col-md-12 center">
