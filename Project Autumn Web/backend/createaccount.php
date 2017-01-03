@@ -32,12 +32,11 @@ if (isset($_POST['submit']))
     {
         die("<script type='text/javascript'>alert('Der findes allerede en konto med samme navn eller E-mail.'); window.location = \"../register.php\";</script>");
     }
-   $passwordHashed =  password_hash($password, PASSWORD_DEFAULT);
-   $passwordHashed = mysqli_real_escape_string($db,$passwordHashed);
+    $passwordHashed =  password_hash($password, PASSWORD_DEFAULT);
+    $passwordHashed = mysqli_real_escape_string($db,$passwordHashed);
     $mySqlQuery = "INSERT INTO `users` (username,email,password)VALUES (?,?,?)";
     $stmt = $db->prepare($mySqlQuery);
-    $username = preg_replace("/[^A-Za-z0-9?![:space:]]/","",$username);
-    $email = preg_replace("/[^A-Za-z0-9?![:space:]]/","",$email);
+    $username = preg_replace("/[^A-Za-z0-9?![:space:]]/","fackoff",$username);
     $stmt -> bind_param("sss", $username,$email,$passwordHashed);
     $stmt ->execute();
     $result = $stmt->get_result();

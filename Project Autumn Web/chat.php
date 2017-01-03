@@ -1,4 +1,5 @@
 <?php
+gc_enable();
 include "backend/checkloggedin.php";
 if(isset($_POST['submit']))
 {
@@ -11,14 +12,34 @@ if(isset($_POST['submit']))
     $why = "ლ( `Д’ ლ)";
     $fight = "(ง’̀-‘́)ง";
     $glory = "https://www.reddit.com/r/AyyMD/";
-    $num = rand(0, 100);
+    $num = rand(-1, 100);
+    $salts =" ( ͡° ͜ʖ ͡°) ( ͡°﹏ ͡°) ( ͡°_ ͡°)";
+    $message = str_ireplace("!salts",$salts,$message);
     $message = str_ireplace("!d",$donger,$message);
     $message = str_ireplace("!moneh",$dongerbill,$message);
     $message = str_ireplace("!shotsfired",$shotsfired,$message);
     $message = str_ireplace("!why",$why,$message);
     $message = str_ireplace("!fightme",$fight,$message);
     $message = str_ireplace("!glory",$glory,$message);
-    $message = str_ireplace("!roll","!roll " . $num,$message);
+    if($num  == -1){
+        $message = str_ireplace("!roll","!roll " . $num . "  lel mate just staph already- ",$message);
+    }
+    elseif($num  < 2){
+        $message = str_ireplace("!roll","!roll " . $num . "  LOL y u so bad m9- ",$message);
+    }
+    elseif($num < 25){
+        $message = str_ireplace("!roll","!roll " . $num . "  LOL Must be rigged as fuck- ",$message);
+    }
+    elseif ($num > 90 && $num < 99){
+        $message = str_ireplace("!roll","!roll " . $num . "   Lol M8 too Ez- ",$message);
+    }
+    elseif ($num > 98){
+        $message = str_ireplace("!roll","!roll " . $num . "   Git gut nerds- ",$message);
+    }
+    else{
+        $message = str_ireplace("!roll","!roll " . $num . " - ",$message);
+    }
+    $message = str_ireplace("!troll","!roll 100 Git gut nerds- ",$message);
     //$message = mysqli_escape_string($db,$message);
     if($message == "" || $message== " ")
     {
@@ -35,7 +56,16 @@ if(isset($_POST['submit']))
     {
         die("<script type='text/javascript'>window.location = \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\";</script>");
     }
-    elseif (strpos($message, '!ban') !== false && $_SESSION['userPrivilege'] == 1) {
+    $userId= $_SESSION['Id'];
+    $sentfrom = $_SESSION['userLoggedin'];
+    $mySqlQuery = "INSERT INTO `mainlobby` (sentfrom,message)VALUES (?,?)";
+    $stmt = $db->prepare($mySqlQuery);
+    $stmt -> bind_param("ss", $sentfrom,$message);
+    $stmt ->execute();
+    $stmt -> close();
+    //$result = mysqli_query($db,$mySqlQuery);
+    $_SESSION['lastMessageId'] = mysqli_insert_id($db);
+    if (strpos($message, '!ban') !== false && $_SESSION['userPrivilege'] == 1) {
         $null = null;
         $message = str_ireplace("!ban ",$null,$message);
         $mySqlQuery = "DELETE FROM users WHERE username = ?";
@@ -58,16 +88,23 @@ if(isset($_POST['submit']))
         $stmt -> close();
         // $result = mysqli_query($db,$mySqlQuery);
         $_SESSION['lastMessageId'] = mysqli_insert_id($db);
+
     }
-    $userId= $_SESSION['Id'];
-    $sentfrom = $_SESSION['userLoggedin'];
-    $mySqlQuery = "INSERT INTO `mainlobby` (sentfrom,message)VALUES (?,?)";
-    $stmt = $db->prepare($mySqlQuery);
-    $stmt -> bind_param("ss", $sentfrom,$message);
-    $stmt ->execute();
-    $stmt -> close();
-    //$result = mysqli_query($db,$mySqlQuery);
-    $_SESSION['lastMessageId'] = mysqli_insert_id($db);
+    if($message == "!mymoneh"){
+        $mySqlQuery = "SELECT dongermoney FROM `users` WHERE `username` = ? OR `email` = ?";
+        $stmt = $db->prepare($mySqlQuery);
+        $stmt -> bind_param("ss", $_SESSION['userLoggedin'],$_SESSION['userLoggedin']);
+        $stmt ->execute();
+        $result = $stmt->get_result();
+        $stmt ->close();
+        $row = mysqli_fetch_array( $result, MYSQLI_ASSOC );
+        $messagemoney = $_SESSION['userLoggedin'] . " have " . $row['dongermoney']." " . $dongerbill;
+        $mySqlQuery = "INSERT INTO `mainlobby` (sentfrom,message)VALUES ('SERVER',?)";
+        $stmt = $db->prepare($mySqlQuery);
+        $stmt -> bind_param("s",$messagemoney);
+        $stmt ->execute();
+        $stmt -> close();
+    }
 }
 ?>
 <!doctype html>
@@ -87,29 +124,33 @@ if(isset($_POST['submit']))
             height: 100%;
         }​
     </style>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
-<body style="font-family: 'Lato', sans-serif;font-size: medium;margin: 1vh;overflow: hidden">
+<body style="font-family: 'Comic Sans MS';font-size: medium;margin: 1vh;overflow: hidden; background-color:#2B2E39 ">
+<script>
+    $(document).ready(function(){
+        $('#messagediv').load("backend/getmessages.php");
+    });
+</script>
 <div class='fullscreenDiv'>
     <div class="center">
         <form action="" method="post">
             <div id="messagediv" style="height: 77vh;width: 100%; display: inline-block;overflow-y: scroll;word-break: break-all;overflow-x: hidden" class="form-group">
-                <script src="http://code.jquery.com/jquery-latest.js"></script>
-                <script>
-                    $(document).ready(function(){
-                        setInterval(function() {
-                            $("#messagediv").load("backend/getmessages.php");
-                        }, 100);
-                    });
-                </script>
             </div>
             <div class="form-group">
-                <input name="message" class="form-control" autofocus <?php if(isset($_SESSION['autocom']) == true){echo "autocomplete=\"off\"";} ?> placeholder="Enter your message">
+                <input style="width: 99%; background-color:#2B2E39; color: #d58512" name="message" class="form-control" autofocus <?php if(isset($_SESSION['autocom']) == true){echo "autocomplete=\"off\"";} ?> placeholder="Enter your message">
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">Send message</button>
+            <button style="margin-bottom:5px"  type="submit" name="submit" class="btn btn-primary" onclick="$('#messagediv').load('backend/getmessages.php')">Send message</button>
         </form>
         <?php include"logout.php"?>
     </div>
 </div>​
-
+<script>
+    $(document).ready(function(){
+        setInterval(function() {
+            $('#messagediv').load("backend/getmessages.php");
+        }, 5000);
+    });
+</script>
 </body>
 </html>

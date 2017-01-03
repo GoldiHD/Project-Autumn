@@ -7,6 +7,10 @@ if($_SESSION['loggedin'] == true)
 {
     include "config.php";
     $usr = $_SESSION['userLoggedin'];
+    if($usr == "" || $usr == " :" || $usr == ""){
+        session_destroy();
+        die(header("Location: ../index.php"));
+    }
     $email = $_SESSION['userEmail'];
     $mySqlQuery = "SELECT * FROM `users` WHERE `username` = ? OR `email` = ?";
     $stmt = $db->prepare($mySqlQuery);

@@ -1,9 +1,10 @@
 <?php
 include "checkloggedin.php";
 include "config.php";
+
 if(isset($_SESSION['lastMessageId']))
 {
-    $lastId = $_SESSION['lastMessageId'] - 25;
+    $lastId = $_SESSION['lastMessageId'] - 100;
     $mySqlQuery = "SELECT Id,sentfrom,message,currenttime FROM `mainlobby` WHERE `Id` > ?";
     $stmt = $db->prepare($mySqlQuery);
     $stmt -> bind_param("i", $lastId);
@@ -11,7 +12,7 @@ if(isset($_SESSION['lastMessageId']))
 
 }
 else
-    {
+{
     $mySqlQuery = "SELECT Id,sentfrom,message,currenttime FROM `mainlobby`";
     $stmt = $db->prepare($mySqlQuery);
     $stmt ->execute();
@@ -25,17 +26,35 @@ function make_links_clickable($text)
 }
 while ($row = mysqli_fetch_array( $result, MYSQLI_ASSOC ))
 {
-    echo "<p>" .  $time = date("H:i:s",strtotime($row['currenttime'])) . " - ";
-    echo $row['sentfrom'] . ": ";
-    if($row['message'] == "!commands")
-    {
-        echo " Current commands are: !d, !shotsfired, !why, !fightme, !commands, !edif, !moneh, !glory, !roll, !freestuff, !ban (if admin)";
-        echo "<br> </p>";
+    if($row['sentfrom'] == "SERVER"){
+        echo "<p style=\"color: #269abc;\">" .  $time = date("H:i:s",strtotime($row['currenttime'])) . " - ";
+        echo $row['sentfrom'] . ": ";
+        if($row['message'] == "!commands")
+        {
+            echo " Current commands are: !d, !shotsfired, !why, !fightme, !commands, !edif, !moneh, !glory, !roll, !freestuff, !mymoneh, !ban (if admin)";
+            echo "<br> </p>";
+        }
+        else
+        {
+            echo make_links_clickable($row['message']);
+            echo "<br> </p>";
+        }
     }
     else
     {
-        echo make_links_clickable($row['message']);
-        echo "<br> </p>";
+        echo "<p style=\"color: #d58512;\">" .  $time = date("H:i:s",strtotime($row['currenttime'])) . " - ";
+        echo $row['sentfrom'] . ": ";
+        if($row['message'] == "!commands")
+        {
+            echo " Current commands are: !d, !shotsfired, !why, !fightme, !commands, !edif, !salts, !moneh, !glory, !roll, !freestuff, !mymoneh,!autocomplete, !ban (if admin)";
+            echo "<br> </p>";
+        }
+        else
+        {
+            $test = nl2br($row['message']);
+            echo make_links_clickable($test);
+            echo "<br> </p>";
+        }
     }
 }
 
