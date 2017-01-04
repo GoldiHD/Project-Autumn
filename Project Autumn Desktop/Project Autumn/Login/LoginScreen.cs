@@ -15,7 +15,9 @@ namespace Project_Autumn
 {
     public partial class Form1 : Form
     {
+        private string IP;
         public static string username;
+        public static string UserPriv;
         private MySQL Connection = new MySQL();
         public string User;
         public string Pass;
@@ -24,6 +26,7 @@ namespace Project_Autumn
         private string[] Users = (string[])null;
         private string[] Password = (string[])null;
         private string[] email = (string[])null;
+        private string[] Priv = (string[])null;
 
         public Form1()
         {
@@ -32,6 +35,7 @@ namespace Project_Autumn
             Users = stringListArray[1].ToArray();
             Password = stringListArray[2].ToArray();
             email = stringListArray[3].ToArray();
+            Priv = stringListArray[4].ToArray();
             Connection.SetIp();
             InitializeComponent();
         }
@@ -64,12 +68,17 @@ namespace Project_Autumn
             int num = Connection.CountUsers();
             for (int i = 0; num > i; )
             {   
-                if(User == Users[i] && BCrypt.CheckPassword(Pass, Password[i]))
+                if(User == Users[i] && BCrypt.CheckPassword(Pass, Password[i])) // maybe add lock account feature, trough admin panel unlock and lock/do timeouts
                 {
+                    Connection.SendChatMainLobby("SERVER", User + " Has logged in.");
+                    IP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+                    Connection.SendIPToServer(IP, User);
+                    UserPriv = Priv[i];
                     LoadMain();
                 }
                else if(User == email[i] && BCrypt.CheckPassword(Pass, Password[i]))
                 {
+                    //uses email for user name, change so it uses the username instead
                     LoadMain();
                 }
                 i++;

@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Chatter\MySql.Data.dll</HintPath>
@@ -50,61 +54,112 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Friends\AddChangeRemoveFriend.cs" />
+    <Compile Include="Admin\AdminLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Admin\AdminLogin.Designer.cs">
+      <DependentUpon>AdminLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Lobby1.cs">
+    <Compile Include="Admin\AdminPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Lobby1.Designer.cs">
+    <Compile Include="Admin\AdminPanel.Designer.cs">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BCrypt.cs" />
+    <Compile Include="Friends\CustomPM.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Friends\CustomPM.Designer.cs">
+      <DependentUpon>CustomPM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Friends\Friends.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Friends\Friends.Designer.cs">
+      <DependentUpon>Friends.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\LoginScreen.Designer.cs">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lobbies\Lobby1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lobbies\Lobby1.Designer.cs">
       <DependentUpon>Lobby1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Lobby2.cs">
+    <Compile Include="Lobbies\Lobby2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Lobby2.Designer.cs">
+    <Compile Include="Lobbies\Lobby2.Designer.cs">
       <DependentUpon>Lobby2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Lobby3.cs">
+    <Compile Include="Lobbies\Lobby3.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Lobby3.Designer.cs">
+    <Compile Include="Lobbies\Lobby3.Designer.cs">
       <DependentUpon>Lobby3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Lobby4.cs">
+    <Compile Include="Lobbies\Lobby4.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Lobby4.Designer.cs">
+    <Compile Include="Lobbies\Lobby4.Designer.cs">
       <DependentUpon>Lobby4.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoginOption.cs">
+    <Compile Include="Login\LoginOption.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoginOption.Designer.cs">
+    <Compile Include="Login\LoginOption.Designer.cs">
       <DependentUpon>LoginOption.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainChat.cs">
+    <Compile Include="Lobbies\MainChat.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainChat.Designer.cs">
+    <Compile Include="Lobbies\MainChat.Designer.cs">
       <DependentUpon>MainChat.cs</DependentUpon>
     </Compile>
     <Compile Include="MySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login\Updatelog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\Updatelog.Designer.cs">
+      <DependentUpon>Updatelog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lobbies\UserLocationChecker.cs" />
+    <Compile Include="Admin\UsersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\UsersForm.Designer.cs">
+      <DependentUpon>UsersForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Admin\AdminLogin.resx">
+      <DependentUpon>AdminLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Lobby1.resx">
+    <EmbeddedResource Include="Admin\AdminPanel.resx">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Friends\CustomPM.resx">
+      <DependentUpon>CustomPM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Friends\Friends.resx">
+      <DependentUpon>Friends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\LoginScreen.resx">
+      <DependentUpon>LoginScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lobbies\Lobby1.resx">
       <DependentUpon>Lobby1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoginOption.resx">
+    <EmbeddedResource Include="Login\LoginOption.resx">
       <DependentUpon>LoginOption.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainChat.resx">
+    <EmbeddedResource Include="Lobbies\MainChat.resx">
       <DependentUpon>MainChat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -116,6 +171,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Login\Updatelog.resx">
+      <DependentUpon>Updatelog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\UsersForm.resx">
+      <DependentUpon>UsersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
