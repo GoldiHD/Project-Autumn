@@ -2,9 +2,8 @@
 Online chat with webinterface and desktop application
 
 ---UNDER DEVELOPMENT---
-Web version is now working with one lobby running.
-
-Desktop version is still VIP but is running with 2 lobbies
+Web version is now working with one lobby running
+Desktop version is running with 2 lobbies
 
 
 
