@@ -29,17 +29,19 @@ To create the user database containing username email password etc use the follo
 ``` MYSQL
 CREATE TABLE `users` (
  `Id` int(11) NOT NULL AUTO_INCREMENT,
- `username` varchar(128) CHARACTER SET latin1 DEFAULT NULL,
- `password` varchar(128) CHARACTER SET latin1 DEFAULT NULL,
- `email` varchar(128) CHARACTER SET latin1 DEFAULT NULL,
- `mode` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+ `username` varchar(128) DEFAULT NULL,
+ `password` varchar(128) DEFAULT NULL,
+ `email` varchar(128) DEFAULT NULL,
+ `mode` varchar(45) DEFAULT NULL,
  `dongermoney` int(11) NOT NULL DEFAULT '10',
- `location` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
- `privileges` int(11) DEFAULT '0',
+ `location` varchar(45) DEFAULT NULL,
+ `privileges` int(11) DEFAULT NULL,
  `createdate` datetime DEFAULT CURRENT_TIMESTAMP,
  `lastloginip` varchar(45) DEFAULT NULL,
+ `emailvalidated` tinyint(2) NOT NULL DEFAULT '0',
+ `usercol` varchar(45) NOT NULL DEFAULT 'xxxx',
  PRIMARY KEY (`Id`),
- UNIQUE KEY `users_UNIQUE` (`username`),
+ UNIQUE KEY `username_UNIQUE` (`username`),
  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 ```
